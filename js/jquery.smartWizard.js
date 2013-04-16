@@ -58,7 +58,7 @@ function SmartWizard(target, options) {
         
         if($this.options.showTopButtons)
         {
-        	$this.target.append(elmActionBar.cloneNode(true));
+        	$this.target.append($(elmActionBar).clone());
         }
         $this.target.append($this.elmStepContainer);
 
