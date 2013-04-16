@@ -113,10 +113,7 @@ function SmartWizard(target, options) {
         _prepareSteps($this);
         // Show the first slected step
         _loadContent($this, $this.curStepIdx);
-        if($this.options.showTopButtons)
-        {
-        	$this.target.insertBefore($(elmActionBar).clone(), $this.elmStepContainer);
-        }
+
     };
 
     var _prepareSteps = function($this) {
