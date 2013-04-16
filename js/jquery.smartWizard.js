@@ -298,7 +298,7 @@ for(var i = 0; i < $this.buttons.length; i++)
             if (($this.steps.length-1) <= $this.curStepIdx){
                 $($this.buttons[i].next).addClass("buttonDisabled");
                 if ($this.options.hideButtonsOnDisabled) {
-                    $($this.buttons[]i.next).hide();
+                    $($this.buttons[i].next).hide();
                 }
             }else{
                 $($this.buttons[i].next).removeClass("buttonDisabled");
