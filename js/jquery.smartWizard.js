@@ -281,42 +281,65 @@ for(var i = 0; i < $this.buttons.length; i++)
     var _adjustButton = function($this) {
         if (! $this.options.cycleSteps){
 		
-		for(var i = 0; i < $this.buttons.length; i++)
-{
+		
 		
             if (0 >= $this.curStepIdx) {
-                $($this.buttons[i].previous).addClass("buttonDisabled");
+				for(var i = 0; i < $this.buttons.length; i++) {	
+					$($this.buttons[i].previous).addClass("buttonDisabled");
+				}
 				if ($this.options.hideButtonsOnDisabled) {
+				for(var i = 0; i < $this.buttons.length; i++) {	
                     $($this.buttons[i].previous).hide();
+					}
                 }
             }else{
+			for(var i = 0; i < $this.buttons.length; i++) {	
                 $($this.buttons[i].previous).removeClass("buttonDisabled");
+				}
                 if ($this.options.hideButtonsOnDisabled) {
+				for(var i = 0; i < $this.buttons.length; i++) {	
                     $($this.buttons[i].previous).show();
+					}
                 }
             }
             if (($this.steps.length-1) <= $this.curStepIdx){
+			for(var i = 0; i < $this.buttons.length; i++) {	
                 $($this.buttons[i].next).addClass("buttonDisabled");
+				}
                 if ($this.options.hideButtonsOnDisabled) {
+				for(var i = 0; i < $this.buttons.length; i++) {	
                     $($this.buttons[i].next).hide();
+					}
                 }
             }else{
+			for(var i = 0; i < $this.buttons.length; i++) {	
                 $($this.buttons[i].next).removeClass("buttonDisabled");
+				}
                 if ($this.options.hideButtonsOnDisabled) {
+				for(var i = 0; i < $this.buttons.length; i++) {	
                     $($this.buttons[i].next).show();
+					}
                 }
             }
         }
         // Finish Button
         if (! $this.steps.hasClass('disabled') || $this.options.enableFinishButton){
+		for(var i = 0; i < $this.buttons.length; i++) {	
             $($this.buttons[i].finish).removeClass("buttonDisabled");
+			}
             if ($this.options.hideButtonsOnDisabled) {
+			for(var i = 0; i < $this.buttons.length; i++) {	
                 $($this.buttons[i].finish).show();
+				}
             }
         }else{
+		for(var i = 0; i < $this.buttons.length; i++) {	
             $($this.buttons[i].finish).addClass("buttonDisabled");
+			}
             if ($this.options.hideButtonsOnDisabled) {
+			for(var i = 0; i < $this.buttons.length; i++) {	
                 $($this.buttons[i].finish).hide();
+				}
             }
         }
 		}
