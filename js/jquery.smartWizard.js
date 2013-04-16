@@ -64,27 +64,28 @@ function SmartWizard(target, options) {
         elmActionBar.append($this.buttons[0].finish)
                     .append($this.buttons[0].next)
                     .append($this.buttons[0].previous);
-                elmTopActionBar.append($this.loader);
-        elmTopActionBar.append($this.buttons[0].finish)
-                    .append($this.buttons[0].next)
-                    .append($this.buttons[0].previous);
+        elmTopActionBar.append($this.loader);
+        elmTopActionBar.append($this.buttons[1].finish)
+                    .append($this.buttons[1].next)
+                    .append($this.buttons[1].previous);
         
-		$this.target.append(elmTopActionBar);
+	$this.target.append(elmTopActionBar);
         
         $this.target.append($this.elmStepContainer);
 
         $this.target.append(elmActionBar);
         this.contentWidth = $this.elmStepContainer.width();
-
-        $($this.buttons.next).click(function() {
+for(var i = 0; i < $this.buttons.length; i++)
+{
+        $($this.buttons[i].next).click(function() {
             $this.goForward();
             return false;
         });
-        $($this.buttons.previous).click(function() {
+        $($this.buttons[i].previous).click(function() {
             $this.goBackward();
             return false;
         });
-        $($this.buttons.finish).click(function() {
+        $($this.buttons[i].finish).click(function() {
             if(!$(this).hasClass('buttonDisabled')){
                 if($.isFunction($this.options.onFinish)) {
                     var context = { fromStep: $this.curStepIdx + 1 };
@@ -100,7 +101,7 @@ function SmartWizard(target, options) {
             }
             return false;
         });
-
+}
         $($this.steps).bind("click", function(e){
             if($this.steps.index(this) == $this.curStepIdx){
                 return false;
@@ -279,41 +280,46 @@ function SmartWizard(target, options) {
 
     var _adjustButton = function($this) {
         if (! $this.options.cycleSteps){
+		
+		for(var i = 0; i < $this.buttons.length; i++)
+{
+		
             if (0 >= $this.curStepIdx) {
-                $($this.buttons.previous).addClass("buttonDisabled");
+                $($this.buttons[i].previous).addClass("buttonDisabled");
 				if ($this.options.hideButtonsOnDisabled) {
-                    $($this.buttons.previous).hide();
+                    $($this.buttons[i].previous).hide();
                 }
             }else{
-                $($this.buttons.previous).removeClass("buttonDisabled");
+                $($this.buttons[i].previous).removeClass("buttonDisabled");
                 if ($this.options.hideButtonsOnDisabled) {
-                    $($this.buttons.previous).show();
+                    $($this.buttons[i].previous).show();
                 }
             }
             if (($this.steps.length-1) <= $this.curStepIdx){
-                $($this.buttons.next).addClass("buttonDisabled");
+                $($this.buttons[i].next).addClass("buttonDisabled");
                 if ($this.options.hideButtonsOnDisabled) {
-                    $($this.buttons.next).hide();
+                    $($this.buttons[]i.next).hide();
                 }
             }else{
-                $($this.buttons.next).removeClass("buttonDisabled");
+                $($this.buttons[i].next).removeClass("buttonDisabled");
                 if ($this.options.hideButtonsOnDisabled) {
-                    $($this.buttons.next).show();
+                    $($this.buttons[i].next).show();
                 }
             }
         }
         // Finish Button
         if (! $this.steps.hasClass('disabled') || $this.options.enableFinishButton){
-            $($this.buttons.finish).removeClass("buttonDisabled");
+            $($this.buttons[i].finish).removeClass("buttonDisabled");
             if ($this.options.hideButtonsOnDisabled) {
-                $($this.buttons.finish).show();
+                $($this.buttons[i].finish).show();
             }
         }else{
-            $($this.buttons.finish).addClass("buttonDisabled");
+            $($this.buttons[i].finish).addClass("buttonDisabled");
             if ($this.options.hideButtonsOnDisabled) {
-                $($this.buttons.finish).hide();
+                $($this.buttons[i].finish).hide();
             }
         }
+		}
     };
 
     /*
