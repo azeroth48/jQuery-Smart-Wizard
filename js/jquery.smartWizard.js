@@ -1,4 +1,3 @@
-
 /*
  * SmartWizard 3.3.1 plugin
  * jQuery Wizard control Plugin
@@ -72,8 +71,10 @@ function SmartWizard(target, options) {
         elmTopActionBar.append($this.buttons[1].finish)
             .append($this.buttons[1].next)
             .append($this.buttons[1].previous);
-
-        $this.target.append(elmTopActionBar);
+        if($this.options.showTopButtons)
+        {
+            $this.target.append(elmTopActionBar);
+        }
 
         $this.target.append($this.elmStepContainer);
 
