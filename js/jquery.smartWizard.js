@@ -444,7 +444,8 @@ $.fn.smartWizard.defaults = {
     ajaxType: "POST",
     onLeaveStep: null, // triggers when leaving a step
     onShowStep: null,  // triggers when showing a step
-    onFinish: null  // triggers when Finish button is clicked
+    onFinish: null,  // triggers when Finish button is clicked
+	showTopButtons : false
 };
 
 })(jQuery);
