@@ -20,7 +20,13 @@ function SmartWizard(target, options) {
     this.msgBox = $('<div class="msgBox"><div class="content"></div><a href="#" class="close">X</a></div>');
     this.elmStepContainer = $('<div></div>').addClass("stepContainer");
     this.loader = $('<div>Loading</div>').addClass("loader");
-    this.buttons = {
+	this.buttons = [];
+    this.buttons[0] = {
+        next : $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext"),
+        previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
+        finish  : $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish")
+    };
+	this.buttons[1] = {
         next : $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext"),
         previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
         finish  : $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish")
@@ -33,6 +39,10 @@ function SmartWizard(target, options) {
     var _init = function($this) {
         var elmActionBar = $('<div></div>').addClass("actionBar");
         elmActionBar.append($this.msgBox);
+		
+		var elmTopActionBar = $('<div></div>').addClass("actionBar");
+        elmTopActionBar.append($this.msgBox);
+		
         $('.close',$this.msgBox).click(function() {
             $this.msgBox.fadeOut("normal");
             return false;
@@ -51,11 +61,15 @@ function SmartWizard(target, options) {
 
         $this.elmStepContainer.append(allDivs);
         elmActionBar.append($this.loader);
-        elmActionBar.append($this.buttons.finish)
-                    .append($this.buttons.next)
-                    .append($this.buttons.previous);
+        elmActionBar.append($this.buttons[0].finish)
+                    .append($this.buttons[0].next)
+                    .append($this.buttons[0].previous);
+                elmTopActionBar.append($this.loader);
+        elmTopActionBar.append($this.buttons[0].finish)
+                    .append($this.buttons[0].next)
+                    .append($this.buttons[0].previous);
         
-        
+		$this.target.append(elmTopActionBar);
         
         $this.target.append($this.elmStepContainer);
 
