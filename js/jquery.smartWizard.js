@@ -296,9 +296,6 @@ function SmartWizard(target, options) {
 
     var _adjustButton = function ($this) {
         if (!$this.options.cycleSteps) {
-
-
-
             if (0 >= $this.curStepIdx) {
                 for (var i = 0; i < $this.buttons.length; i++) {
                     $($this.buttons[i].previous).addClass("buttonDisabled");
@@ -358,104 +355,104 @@ function SmartWizard(target, options) {
                 }
             }
         }
-    }
-};
+    };
 
-/*
- * Public methods
- */
 
-SmartWizard.prototype.goForward = function () {
-    var nextStepIdx = this.curStepIdx + 1;
-    if (this.steps.length <= nextStepIdx) {
-        if (!this.options.cycleSteps) {
+    /*
+     * Public methods
+     */
+
+    SmartWizard.prototype.goForward = function () {
+        var nextStepIdx = this.curStepIdx + 1;
+        if (this.steps.length <= nextStepIdx) {
+            if (!this.options.cycleSteps) {
+                return false;
+            }
+            nextStepIdx = 0;
+        }
+        _loadContent(this, nextStepIdx);
+    };
+
+    SmartWizard.prototype.goBackward = function () {
+        var nextStepIdx = this.curStepIdx - 1;
+        if (0 > nextStepIdx) {
+            if (!this.options.cycleSteps) {
+                return false;
+            }
+            nextStepIdx = this.steps.length - 1;
+        }
+        _loadContent(this, nextStepIdx);
+    };
+
+    SmartWizard.prototype.goToStep = function (stepNum) {
+        var stepIdx = stepNum - 1;
+        if (stepIdx >= 0 && stepIdx < this.steps.length) {
+            _loadContent(this, stepIdx);
+        }
+    };
+    SmartWizard.prototype.enableStep = function (stepNum) {
+        var stepIdx = stepNum - 1;
+        if (stepIdx == this.curStepIdx || stepIdx < 0 || stepIdx >= this.steps.length) {
             return false;
         }
-        nextStepIdx = 0;
+        var step = this.steps.eq(stepIdx);
+        $(step, this.target).attr("isDone", 1);
+        $(step, this.target).removeClass("disabled").removeClass("selected").addClass("done");
     }
-    _loadContent(this, nextStepIdx);
-};
-
-SmartWizard.prototype.goBackward = function () {
-    var nextStepIdx = this.curStepIdx - 1;
-    if (0 > nextStepIdx) {
-        if (!this.options.cycleSteps) {
+    SmartWizard.prototype.disableStep = function (stepNum) {
+        var stepIdx = stepNum - 1;
+        if (stepIdx == this.curStepIdx || stepIdx < 0 || stepIdx >= this.steps.length) {
             return false;
         }
-        nextStepIdx = this.steps.length - 1;
+        var step = this.steps.eq(stepIdx);
+        $(step, this.target).attr("isDone", 0);
+        $(step, this.target).removeClass("done").removeClass("selected").addClass("disabled");
     }
-    _loadContent(this, nextStepIdx);
-};
-
-SmartWizard.prototype.goToStep = function (stepNum) {
-    var stepIdx = stepNum - 1;
-    if (stepIdx >= 0 && stepIdx < this.steps.length) {
-        _loadContent(this, stepIdx);
-    }
-};
-SmartWizard.prototype.enableStep = function (stepNum) {
-    var stepIdx = stepNum - 1;
-    if (stepIdx == this.curStepIdx || stepIdx < 0 || stepIdx >= this.steps.length) {
-        return false;
-    }
-    var step = this.steps.eq(stepIdx);
-    $(step, this.target).attr("isDone", 1);
-    $(step, this.target).removeClass("disabled").removeClass("selected").addClass("done");
-}
-SmartWizard.prototype.disableStep = function (stepNum) {
-    var stepIdx = stepNum - 1;
-    if (stepIdx == this.curStepIdx || stepIdx < 0 || stepIdx >= this.steps.length) {
-        return false;
-    }
-    var step = this.steps.eq(stepIdx);
-    $(step, this.target).attr("isDone", 0);
-    $(step, this.target).removeClass("done").removeClass("selected").addClass("disabled");
-}
-SmartWizard.prototype.currentStep = function () {
-    return this.curStepIdx + 1;
-}
-
-SmartWizard.prototype.showMessage = function (msg) {
-    $('.content', this.msgBox).html(msg);
-    this.msgBox.show();
-}
-SmartWizard.prototype.hideMessage = function () {
-    this.msgBox.fadeOut("normal");
-}
-SmartWizard.prototype.showError = function (stepnum) {
-    this.setError(stepnum, true);
-}
-SmartWizard.prototype.hideError = function (stepnum) {
-    this.setError(stepnum, false);
-}
-SmartWizard.prototype.setError = function (stepnum, iserror) {
-    if (typeof stepnum == "object") {
-        iserror = stepnum.iserror;
-        stepnum = stepnum.stepnum;
+    SmartWizard.prototype.currentStep = function () {
+        return this.curStepIdx + 1;
     }
 
-    if (iserror) {
-        $(this.steps.eq(stepnum - 1), this.target).addClass('error')
-    } else {
-        $(this.steps.eq(stepnum - 1), this.target).removeClass("error");
+    SmartWizard.prototype.showMessage = function (msg) {
+        $('.content', this.msgBox).html(msg);
+        this.msgBox.show();
     }
-}
+    SmartWizard.prototype.hideMessage = function () {
+        this.msgBox.fadeOut("normal");
+    }
+    SmartWizard.prototype.showError = function (stepnum) {
+        this.setError(stepnum, true);
+    }
+    SmartWizard.prototype.hideError = function (stepnum) {
+        this.setError(stepnum, false);
+    }
+    SmartWizard.prototype.setError = function (stepnum, iserror) {
+        if (typeof stepnum == "object") {
+            iserror = stepnum.iserror;
+            stepnum = stepnum.stepnum;
+        }
 
-SmartWizard.prototype.fixHeight = function () {
-    var height = 0;
+        if (iserror) {
+            $(this.steps.eq(stepnum - 1), this.target).addClass('error')
+        } else {
+            $(this.steps.eq(stepnum - 1), this.target).removeClass("error");
+        }
+    }
 
-    var selStep = this.steps.eq(this.curStepIdx);
-    var stepContainer = _step(this, selStep);
-    stepContainer.children().each(function () {
-        height += $(this).outerHeight();
-    });
+    SmartWizard.prototype.fixHeight = function () {
+        var height = 0;
 
-    // These values (5 and 20) are experimentally chosen.
-    stepContainer.height(height + 5);
-    this.elmStepContainer.height(height + 20);
-}
+        var selStep = this.steps.eq(this.curStepIdx);
+        var stepContainer = _step(this, selStep);
+        stepContainer.children().each(function () {
+            height += $(this).outerHeight();
+        });
 
-_init(this);
+        // These values (5 and 20) are experimentally chosen.
+        stepContainer.height(height + 5);
+        this.elmStepContainer.height(height + 20);
+    }
+
+    _init(this);
 };
 
 
